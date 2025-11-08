@@ -13,16 +13,19 @@ export interface PaginatedResponse<T> {
 }
 
 export interface LoginRequest {
-  username: string;
+  email: string;
   password: string;
 }
 
 export interface LoginResponse {
-  access_token: string;
-  user: {
-    id: string;
-    username: string;
+  token: string;
+  userData: {
+    userId: string;
     email: string;
+    establishmentId: string;
+    name: string;
+    organizationId: string;
+    profilePhotoURL: string;
     role: string;
   };
 }

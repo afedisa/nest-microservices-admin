@@ -6,7 +6,7 @@ class OrganizationService {
   private baseUrl = '/v1/organizations';
 
   async getAll(params?: QueryParams): Promise<Organization[]> {
-    return await apiService.get<Organization[]>(this.baseUrl, params);
+    return await apiService.get<Organization[]>(`${this.baseUrl}/all`, params);
   }
 
   async getById(id: string): Promise<Organization> {
@@ -18,7 +18,7 @@ class OrganizationService {
   }
 
   async update(id: string, data: UpdateOrganizationRequest): Promise<Organization> {
-    return await apiService.put<Organization>(`${this.baseUrl}/${id}`, data);
+    return await apiService.patch<Organization>(`${this.baseUrl}/${id}`, data);
   }
 
   async delete(id: string): Promise<void> {

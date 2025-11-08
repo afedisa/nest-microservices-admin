@@ -151,7 +151,7 @@ export default function Layout() {
                 {/* User menu */}
                 <div className="flex items-center space-x-3">
                   <div className="text-sm">
-                    <p className="font-medium text-gray-700">{user?.name || user?.username}</p>
+                    <p className="font-medium text-gray-700">{user?.name || user?.email}</p>
                     <p className="text-gray-500">{user?.role}</p>
                   </div>
                   <button

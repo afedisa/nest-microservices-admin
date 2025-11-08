@@ -3,11 +3,13 @@ import authService from '../services/auth.service';
 import { LoginRequest } from '../types/api';
 
 interface User {
-  id: string;
-  username: string;
+  userId: string;
   email: string;
   role: string;
   name?: string;
+  establishmentId?: string;
+  organizationId?: string;
+  profilePhotoURL?: string;
 }
 
 interface AuthState {
@@ -117,7 +119,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       dispatch({ type: 'LOGIN_START' });
       const response = await authService.login(credentials);
-      dispatch({ type: 'LOGIN_SUCCESS', payload: response.user });
+      dispatch({ type: 'LOGIN_SUCCESS', payload: response.userData });
     } catch (error: any) {
       const errorMessage = error.response?.data?.message || 'Error al iniciar sesión';
       dispatch({ type: 'LOGIN_FAILURE', payload: errorMessage });

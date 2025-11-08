@@ -6,7 +6,7 @@ class UserService {
   private baseUrl = '/v1/users';
 
   async getAll(params?: QueryParams): Promise<User[]> {
-    return await apiService.get<User[]>(this.baseUrl, params);
+    return await apiService.get<User[]>(`${this.baseUrl}/all`, params);
   }
 
   async getById(id: string): Promise<User> {
@@ -22,7 +22,7 @@ class UserService {
   }
 
   async update(id: string, data: UpdateUserRequest): Promise<User> {
-    return await apiService.put<User>(`${this.baseUrl}/${id}`, data);
+    return await apiService.patch<User>(`${this.baseUrl}/${id}`, data);
   }
 
   async delete(id: string): Promise<void> {
