@@ -18,7 +18,7 @@ class OrganizationService {
   }
 
   async update(id: string, data: UpdateOrganizationRequest): Promise<Organization> {
-    return await apiService.put<Organization>(`${this.baseUrl}/${id}`, data);
+    return await apiService.patch<Organization>(`${this.baseUrl}/${id}`, data);
   }
 
   async delete(id: string): Promise<void> {

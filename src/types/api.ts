@@ -23,6 +23,10 @@ export interface LoginResponse {
     id: string;
     username: string;
     email: string;
+    establishmentId: string;
+    name: string;
+    organizationId: string;
+    profilePhotoURL: string;
     role: string;
   };
 }

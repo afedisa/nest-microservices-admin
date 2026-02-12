@@ -16,8 +16,15 @@ class ApiService {
     // Request interceptor to add auth token
     this.api.interceptors.request.use(
       (config) => {
+        // No añadir token en login/logout según la regla
+        const url = config.url || '';
+        if (url.includes('/v1/auth/login') || url.includes('/v1/auth/logout')) {
+          return config;
+        }
+
         const token = localStorage.getItem('auth_token');
         if (token) {
+          config.headers = config.headers || {};
           config.headers.Authorization = `Bearer ${token}`;
         }
         return config;
@@ -32,8 +39,18 @@ class ApiService {
       (response) => response,
       (error) => {
         if (error.response?.status === 401) {
+          // Limpiar token y datos de usuario
           localStorage.removeItem('auth_token');
-          localStorage.removeItem('user');
+          localStorage.removeItem('userData');
+          // Intentamos borrar cookies comunes que puedan contener el jwt
+          try {
+            const cookieNames = ['jwtToken', 'token', 'access_token', 'jwt'];
+            cookieNames.forEach((name) => {
+              document.cookie = `${name}=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
+            });
+          } catch (e) {
+            // no crítico si falla (e.g. SSR env)
+          }
           window.location.href = '/login';
         }
         return Promise.reject(error);
@@ -79,7 +96,17 @@ class ApiService {
   // Remove auth token
   removeAuthToken(): void {
     localStorage.removeItem('auth_token');
-    localStorage.removeItem('user');
+    localStorage.removeItem('userData');
+
+    // Intentar borrar cookies comunes donde el backend pudiera haber guardado el jwt
+    try {
+      const cookieNames = ['jwtToken', 'token', 'access_token', 'jwt'];
+      cookieNames.forEach((name) => {
+        document.cookie = `${name}=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
+      });
+    } catch (e) {
+      // noop
+    }
   }
 
   // Get auth token

@@ -22,7 +22,7 @@ class EstablishmentService {
   }
 
   async update(id: string, data: UpdateEstablishmentRequest): Promise<Establishment> {
-    return await apiService.put<Establishment>(`${this.baseUrl}/${id}`, data);
+    return await apiService.patch<Establishment>(`${this.baseUrl}/${id}`, data);
   }
 
   async delete(id: string): Promise<void> {

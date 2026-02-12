@@ -33,6 +33,9 @@ export default function LoginPage() {
     try {
       await login(data);
       toast.success('¡Bienvenido!');
+  // Navegar inmediatamente al destino (evita depender solo del efecto)
+  const target = typeof from === 'string' && from.startsWith('/') ? from : '/';
+  navigate(target, { replace: true });
     } catch (error) {
       // Error already handled by auth context and toast
     }

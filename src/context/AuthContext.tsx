@@ -3,11 +3,13 @@ import authService from '../services/auth.service';
 import { LoginRequest } from '../types/api';
 
 interface User {
-  id: string;
-  username: string;
+  userId: string;
   email: string;
   role: string;
   name?: string;
+  establishmentId?: string;
+  organizationId?: string;
+  profilePhotoURL?: string;
 }
 
 interface AuthState {
