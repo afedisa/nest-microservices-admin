@@ -6,7 +6,7 @@ class UserService {
   private baseUrl = '/v1/users';
 
   async getAll(params?: QueryParams): Promise<User[]> {
-    return await apiService.get<User[]>(this.baseUrl, params);
+    return await apiService.get<User[]>(`${this.baseUrl}/all`, params);
   }
 
   async getById(id: string): Promise<User> {

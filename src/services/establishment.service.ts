@@ -6,7 +6,7 @@ class EstablishmentService {
   private baseUrl = '/v1/establishments';
 
   async getAll(params?: QueryParams): Promise<Establishment[]> {
-    return await apiService.get<Establishment[]>(this.baseUrl, params);
+    return await apiService.get<Establishment[]>(`${this.baseUrl}/all`, params);
   }
 
   async getById(id: string): Promise<Establishment> {

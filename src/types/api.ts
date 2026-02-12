@@ -13,13 +13,13 @@ export interface PaginatedResponse<T> {
 }
 
 export interface LoginRequest {
-  username: string;
+  email: string;
   password: string;
 }
 
 export interface LoginResponse {
   access_token: string;
-  user: {
+  userData: {
     id: string;
     username: string;
     email: string;

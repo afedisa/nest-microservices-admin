@@ -6,7 +6,7 @@ class ServiceService {
   private baseUrl = '/v1/services';
 
   async getAll(params?: QueryParams): Promise<Service[]> {
-    return await apiService.get<Service[]>(this.baseUrl, params);
+    return await apiService.get<Service[]>(`${this.baseUrl}/all`, params);
   }
 
   async getById(id: string): Promise<Service> {
