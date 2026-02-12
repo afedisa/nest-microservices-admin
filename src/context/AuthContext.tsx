@@ -3,7 +3,7 @@ import authService from '../services/auth.service';
 import { LoginRequest } from '../types/api';
 
 interface User {
-  userId: string;
+  id: string;
   email: string;
   role: string;
   name?: string;

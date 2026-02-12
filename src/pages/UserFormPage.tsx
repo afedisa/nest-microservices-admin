@@ -11,6 +11,8 @@ import computePatch from '../utils/computePatch';
 import { useForm, SubmitHandler, Resolver } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { hashPassword } from '../utils/hash';
+
 
 export default function UserFormPage() {
   const { id } = useParams();
@@ -128,10 +130,21 @@ export default function UserFormPage() {
         }
         toast.success('Usuario actualizado');
       } else {
+        const pepper = process.env.REACT_APP_PASSWORD_PEPPER;
+        if (!pepper) {
+          throw new Error('Falta configurar REACT_APP_PASSWORD_PEPPER');
+        }
+
+        if (!formData.password) {
+          toast.error('Contraseña requerida');
+          return;
+        }
+
+        const hashedPassword = await hashPassword(formData.password, pepper);
         const payload: CreateUserRequest = {
           name: formData.name,
           username: formData.username,
-          password: formData.password as string,
+          password: hashedPassword as string,
           email: formData.email,
           role: formData.role,
           establishmentId: formData.establishmentId,
