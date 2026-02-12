@@ -22,7 +22,7 @@ class UserService {
   }
 
   async update(id: string, data: UpdateUserRequest): Promise<User> {
-    return await apiService.put<User>(`${this.baseUrl}/${id}`, data);
+    return await apiService.patch<User>(`${this.baseUrl}/${id}`, data);
   }
 
   async delete(id: string): Promise<void> {
