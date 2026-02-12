@@ -77,7 +77,7 @@ src/
 Crea un archivo `.env` en la raíz del proyecto:
 
 ```env
-REACT_APP_API_URL=http://localhost:3001/api
+REACT_APP_API_URL=http://localhost:3000/api
 REACT_APP_ENV=development
 REACT_APP_APP_NAME=Microservices Admin
 REACT_APP_VERSION=1.0.0
@@ -179,16 +179,16 @@ El panel se conecta con el backend NestJS a través de los siguientes endpoints:
 Este panel de administración está diseñado para trabajar con el sistema de microservicios ubicado en `nest-api-microservices-rbmq`. 
 
 ### Configuración del Backend
-1. Asegúrate de que el backend esté ejecutándose en `http://localhost:3001`
+1. Asegúrate de que el backend esté ejecutándose en `http://localhost:3000`
 2. Verifica que el gateway esté configurado correctamente
 3. Los microservicios deben estar comunicándose vía RabbitMQ
 
 ### Endpoints del Gateway
 El gateway del backend expone las APIs que consume este panel:
-- `localhost:3001/api/v1/auth/*` - Autenticación
-- `localhost:3001/api/v1/organizations/*` - Organizaciones
-- `localhost:3001/api/v1/establishments/*` - Establecimientos
-- `localhost:3001/api/v1/users/*` - Usuarios
+- `localhost:3000/api/v1/auth/*` - Autenticación
+- `localhost:3000/api/v1/organizations/*` - Organizaciones
+- `localhost:3000/api/v1/establishments/*` - Establecimientos
+- `localhost:3000/api/v1/users/*` - Usuarios
 
 ## Desarrollo
 

@@ -1,15 +1,34 @@
 import apiService from './api.service';
 import { LoginRequest, LoginResponse } from '../types/api';
 
+const encodeHex = (buffer: ArrayBuffer): string => {
+  const bytes = new Uint8Array(buffer);
+  return Array.from(bytes)
+    .map((byte) => byte.toString(16).padStart(2, '0'))
+    .join('');
+};
+
+const hashPassword = async (password: string, pepper: string): Promise<string> => {
+  const data = new TextEncoder().encode(`${password}${pepper}`);
+  const hash = await crypto.subtle.digest('SHA-256', data);
+  return encodeHex(hash);
+};
+
 class AuthService {
   async login(credentials: LoginRequest): Promise<LoginResponse> {
-    const response = await apiService.post<LoginResponse>('/v1/auth/login', credentials);
-    
+    const pepper = process.env.REACT_APP_PASSWORD_PEPPER;
+    if (!pepper) {
+      throw new Error('Falta configurar REACT_APP_PASSWORD_PEPPER');
+    }
+
+    const hashedPassword = await hashPassword(credentials.password, pepper);
+    const payload = { ...credentials, password: hashedPassword };
+    const response = await apiService.post<LoginResponse>('/v1/auth/login', payload);
+    console.log('Login response:', response);
     // Store token and user info
-    if (response.token) {
-      apiService.setAuthToken(response.token);
-      // Guardamos los datos del usuario en la clave 'userData' según el requisito
-      localStorage.setItem('userData', JSON.stringify(response.userData));
+    if (response.access_token) {
+      apiService.setAuthToken(response.access_token);
+      localStorage.setItem('user', JSON.stringify(response.userData));
     }
     
     return response;
