@@ -12,7 +12,6 @@ class AuthService {
     const hashedPassword = await hashPassword(credentials.password, pepper);
     const payload = { ...credentials, password: hashedPassword };
     const response = await apiService.post<LoginResponse>('/v1/auth/login', payload);
-    console.log('Login response:', response);
     // Store token and user info
     if (response.access_token) {
       apiService.setAuthToken(response.access_token);
